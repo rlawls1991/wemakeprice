@@ -63,9 +63,10 @@
             dataType: 'json'
         }).done(function (data) {
 
+            $("#quotient").empty();
+            $("#remainder").empty();
             $("#quotient").text(data.quotient);
             $("#remainder").text(data.remainder);
-
         });
     }
 </script>
