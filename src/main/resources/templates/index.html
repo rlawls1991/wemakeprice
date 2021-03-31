@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#send').on('click', function (e) {
+            sendParsingUrlAjax();
+        });
+    });
+
+    function checkUrl(url){
+        if (url == "") {
+            return true;
+        }
+        return false;
+    }
+    function checkPrintStatus(printStatus){
+        if (url == "") {
+            return true;
+        }
+        return false;
+    }
+    function checkBundle(bundle){
+       if (url == "") {
+            return true;
+       }
+       return false;
+    }
+
+    function sendParsingUrlAjax() {
+        let data = {};
+        let url = encodeURI($("#url").val().replace(/ /g,""));
+        let printStatus = $('#printStatus option:selected').val().replace(/ /g,"");
+        let bundle = $("#bundle").val().replace(/ /g,"");
+
+        if (checkUrl(url)) {
+            alert("URL을 입력을 확인해주세요(공백 확인)");
+            return;
+        }
+        if (checkPrintStatus(printStatus)) {
+            alert("printStatus을 입력을 확인해주세요(공백 확인)");
+            return;
+        }
+        if (checkBundle(bundle)) {
+            alert("bundle을 입력을 확인해주세요(공백 확인)");
+            return;
+        }
+
+        data.url = $("#url").val();
+        data.printStatus = $('#printStatus option:selected').val();
+        data.bundle = $("#bundle").val();
+
+        $.ajax({
+            url: '/api/parse',
+            data: JSON.stringify(data),
+            method: 'post',
+            contentType: 'application/json',
+            dataType: 'json'
+        }).done(function (data) {
+
+            $("#quotient").text(data.quotient);
+            $("#remainder").text(data.remainder);
+
+        });
+    }
+</script>
+
+<body>
+    <div>
+        <h2>입력</h2>
+    </div>
+    <div>
+        <h3>URL 입력 </h3>
+        <input type="text" id="url" >
+
+        <h3>요청횟수 </h3>
+        <div>
+            <select id="printStatus">
+                <option value="TEXT" selected>TEXT 전체</option>
+                <option value="REMOVE">HTML 태그 제외</option>
+            </select>
+        </div>
+        <div>
+            출력 단위 묶음 <input type="text" id="bundle">
+        </div>
+        <br/>
+        <div>
+            <input type="button" value="출력" id="send">
+        </div>
+        <h3>출력 </h3>
+        <div>
+            <div>
+                몫 : &nbsp;<textarea id="quotient" rows="15" cols="150" readonly></textarea><br/>
+            </div>
+            <div>
+                나머지 :&nbsp;<textarea id="remainder" rows="15" cols="150" readonly></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
