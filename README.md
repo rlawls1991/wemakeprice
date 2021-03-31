@@ -22,3 +22,14 @@
 
 ## RestApi 설명
     src > docs > asciidoc > index.adoc 을 보게 된다면 RestApi http-request, http-response의 결과 확인가능
+
+## 개발 환경설정 및 라이브러리
+* OpenJdk 11
+* spring-boot 2.4.4
+* LomBok
+* Gradle
+* thymeleaf
+* restdocs
+* jsoup 
+* hateoas
+* validation
