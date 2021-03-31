@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,7 +47,7 @@ public class ParsingUrlApiControllerTest {
                 .build();
 
         // When
-        ResultActions perform = mockMvc.perform(get("/api/parse")
+        ResultActions perform = mockMvc.perform(post("/api/parse")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(this.objectMapper.writeValueAsString(parsingParamDto)))
@@ -69,7 +69,7 @@ public class ParsingUrlApiControllerTest {
         ParsingResultDto ParsingResultDto = new ParsingResultDto("123", "2222");
 
         // When
-        ResultActions perform = mockMvc.perform(get("/api/parse")
+        ResultActions perform = mockMvc.perform(post("/api/parse")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(this.objectMapper.writeValueAsString(ParsingResultDto)))
@@ -90,7 +90,7 @@ public class ParsingUrlApiControllerTest {
                 .build();
 
         // When
-        ResultActions perform = mockMvc.perform(get("/api/parse")
+        ResultActions perform = mockMvc.perform(post("/api/parse")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(this.objectMapper.writeValueAsString(parsingParamDto)))
@@ -114,7 +114,7 @@ public class ParsingUrlApiControllerTest {
                 .build();
 
         // When
-        ResultActions perform = mockMvc.perform(get("/api/parse")
+        ResultActions perform = mockMvc.perform(post("/api/parse")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(this.objectMapper.writeValueAsString(parsingParamDto)))
@@ -135,7 +135,7 @@ public class ParsingUrlApiControllerTest {
                 .build();
 
         // When
-        ResultActions perform = mockMvc.perform(get("/api/parse")
+        ResultActions perform = mockMvc.perform(post("/api/parse")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(this.objectMapper.writeValueAsString(parsingParamDto)))
