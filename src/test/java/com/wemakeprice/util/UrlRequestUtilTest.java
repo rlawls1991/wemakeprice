@@ -36,12 +36,10 @@ public class UrlRequestUtilTest {
     @Test
     @DisplayName("URL을 잘못 입력되었을 때 발생되는 에러 테스트")
     public void urlRequestTest_False() throws Exception {
-        UnknownHostException exception = assertThrows(UnknownHostException.class,
+        RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> UrlRequestUtil.httpRequest(TEST_URL_FALSE));
 
-        String errorMessage = exception.getMessage();
-
-        assertEquals(errorMessage, "URL을 잘못 입력했습니다.");
+        assertEquals(exception.getMessage(), "Invalid URL");
     }
 
     @ParameterizedTest

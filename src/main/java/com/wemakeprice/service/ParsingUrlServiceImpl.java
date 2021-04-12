@@ -3,6 +3,7 @@ package com.wemakeprice.service;
 
 import com.wemakeprice.dto.ParsingParamDto;
 import com.wemakeprice.dto.ParsingResultDto;
+import com.wemakeprice.dto.printstatus.PrintStatus;
 import com.wemakeprice.util.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,6 @@ import java.util.List;
 @Service
 public class ParsingUrlServiceImpl implements ParsingUrlService {
 
-    @SneakyThrows
     @Override
     public ParsingResultDto getParsingResult(ParsingParamDto parsingParamDto) {
         // printStatus 에 따른 태그 삭제 유무 결과
@@ -35,14 +35,12 @@ public class ParsingUrlServiceImpl implements ParsingUrlService {
         return new ParsingResultDto(quotient, remainder);
     }
 
-
-    @SneakyThrows
-    private String getHtmlString(String printStatus, String url) {
-        String urlRequestHtml = urlRequestHtml = UrlRequestUtil.httpRequest(url);
+    private String getHtmlString(PrintStatus printStatus, String url) {
+        String urlRequestHtml = UrlRequestUtil.httpRequest(url);
         urlRequestHtml = ReplaceUtil.replaceBasic(urlRequestHtml);
 
         // 태그삭제
-        if ("REMOVE".equals(printStatus)) {
+        if ("REMOVE".equals(printStatus.getStatus())) {
             return ReplaceUtil.removeTag(urlRequestHtml);
         }
 

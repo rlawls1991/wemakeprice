@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeprice.common.RestDocsConfiguration;
 import com.wemakeprice.dto.ParsingParamDto;
 import com.wemakeprice.dto.ParsingResultDto;
+import com.wemakeprice.dto.printstatus.PrintStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class ParsingUrlApiControllerTest {
         // Given
         ParsingParamDto parsingParamDto = ParsingParamDto.builder()
                 .url(TEST_URL)
-                .printStatus("TEXT")
+                .printStatus(PrintStatus.REMOVE)
                 .bundle(10)
                 .build();
 
@@ -76,16 +77,16 @@ public class ParsingUrlApiControllerTest {
                 .andDo(print());
 
         // Then
-        perform.andExpect(status().isBadRequest());
+        perform.andExpect(status().is4xxClientError());
     }
 
     @Test
-    @DisplayName("printStatus가 TEXT 또는 REMOVE가 아닌 경우 발생하는 테스트")
+    @DisplayName("printStatus가 선택되지 않았을 때 발생되는 에러")
     void parsingUrl_Bad_Request_Wrong_Input_PrintStatus() throws Exception {
         // Given
         ParsingParamDto parsingParamDto = ParsingParamDto.builder()
                 .url(TEST_URL)
-                .printStatus("123")
+                .printStatus(null)
                 .bundle(10)
                 .build();
 
@@ -98,8 +99,7 @@ public class ParsingUrlApiControllerTest {
 
         // Then
         perform.andExpect(status().isBadRequest())
-            .andExpect(jsonPath("message").value("printStatus을 확인해주세요"))
-            .andExpect(jsonPath("errorMessage").value("printStatus은 TEXT 또는 REMOVE 만 가능합니다."))
+            .andExpect(jsonPath("message").value(" Invalid Input Value"))
         ;
     }
 
@@ -109,7 +109,7 @@ public class ParsingUrlApiControllerTest {
         // Given
         ParsingParamDto parsingParamDto = ParsingParamDto.builder()
                 .url(TEST_URL)
-                .printStatus("TEXT")
+                .printStatus(PrintStatus.REMOVE)
                 .bundle(-10)
                 .build();
 
@@ -130,7 +130,7 @@ public class ParsingUrlApiControllerTest {
         // Given
         ParsingParamDto parsingParamDto = ParsingParamDto.builder()
                 .url("test")
-                .printStatus("TEXT")
+                .printStatus(PrintStatus.TEXT)
                 .bundle(10)
                 .build();
 
